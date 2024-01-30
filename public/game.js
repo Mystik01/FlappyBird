@@ -176,6 +176,14 @@ canvas.addEventListener('click', function(event) {
     }
 });
 
+canvas.addEventListener('touchstart', function(event) {
+    if (gameRunning) {
+        bird.velocityY = jump;
+        gameStarted = true;
+    }
+    event.preventDefault(); // Prevent the default action to avoid scrolling the page
+}, false);
+
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
