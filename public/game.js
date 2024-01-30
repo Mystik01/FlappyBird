@@ -75,7 +75,7 @@ function updatePipes() {
     });
 }
 
-function collisionDetection(pipe) {
+function collisionDetection(pipe) { // detect when you hit a pipe
     let birdRight = bird.x + bird.width;
     let birdBottom = bird.y + bird.height;
     let pipeRight = pipe.x + pipeWidth;
@@ -134,7 +134,7 @@ function updateHighScore() {
     }
 } // Store highest score in cookies
 
-function restartGame() {
+function restartGame() { // Self explainatry 
     bird = { x: 50, y: 150, velocityY: 0, width: 30, height: 30 };
     pipes = [];
     score = 0;
@@ -146,14 +146,14 @@ function restartGame() {
     gameLoop();
 } 
 
-function setCookie(name, value, days) {
+function setCookie(name, value, days) { // Set highscore
     const d = new Date();
     d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
     let expires = "expires=" + d.toUTCString();
     document.cookie = name + "=" + value + ";" + expires + ";path=/";
 } // Don't touch
 
-function getCookie(name) {
+function getCookie(name) { // Gets high score
     let nameEQ = name + "=";
     let ca = document.cookie.split(';');
     for (let i = 0; i < ca.length; i++) {
@@ -171,14 +171,14 @@ document.addEventListener('keydown', function(event) {
     }
 }); // Trigger
 
-canvas.addEventListener('click', function(event) {
+canvas.addEventListener('click', function(event) { // left click on mouse
     if (gameRunning) {
         bird.velocityY = jump;
         gameStarted = true;
     }
 }); // Another trigger
 
-canvas.addEventListener('touchstart', function(event) {
+canvas.addEventListener('touchstart', function(event) { // mobile clicks
     if (gameRunning) {
         bird.velocityY = jump;
         gameStarted = true;
@@ -189,7 +189,7 @@ canvas.addEventListener('touchstart', function(event) {
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Set and draw the background color
+    // Set the background color
     ctx.fillStyle = 'lightblue';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     drawBird();
@@ -203,7 +203,7 @@ function gameLoop() {
         ctx.font = '20px Arial';
         ctx.fillStyle = 'black';
 
-    // Draw the score
+    // Show the score
         ctx.fillText(score.toString(), 10, 30);
   
         if (gameRunning) {
