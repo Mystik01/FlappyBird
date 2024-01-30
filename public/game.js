@@ -57,7 +57,7 @@ function drawPipes() {
 }
 
 function updatePipes() {
-    if (frameCount % 180 === 0) { // Change from 90 to 180
+    if (frameCount % 120 === 0) { // Change from 90 to 180
         addPipe();
     }
     pipes.forEach(function(pipe, index) {
