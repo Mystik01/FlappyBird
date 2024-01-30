@@ -56,12 +56,12 @@ function drawPipes() {
 }
 
 function updatePipes() {
-    if (frameCount % 90 === 0) {
+    if (frameCount % 180 === 0) { // Change from 90 to 180
         addPipe();
     }
     pipes.forEach(function(pipe, index) {
         pipe.x -= 2;
-        if (pipe.x + pipeWidth < 0) {
+        if (pipe.x + pipeWidth < -pipeWidth) { // Change from 0 to -pipeWidth
             pipes.splice(index, 1);
         }
         if (pipe.x + pipeWidth < bird.x && !pipe.scored) {
