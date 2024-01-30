@@ -40,8 +40,9 @@ function updateBird() {
 
 function addPipe() {
     // Ensure there's always enough space for a bottom pipe
-    let maxTopPipeHeight = canvas.height - pipeGap - 50; // 50 is the minimum height for the bottom pipe
-    let topPipeHeight = Math.floor(Math.random() * maxTopPipeHeight) + 50;
+    let minTopPipeHeight = 100; // Minimum height for the top pipe
+    let maxTopPipeHeight = canvas.height - pipeGap - 100; // Maximum height for the top pipe
+    let topPipeHeight = Math.floor(Math.random() * (maxTopPipeHeight - minTopPipeHeight + 1)) + minTopPipeHeight;
     pipes.push({ x: canvas.width, y: topPipeHeight });
 }
 
