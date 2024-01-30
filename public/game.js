@@ -24,7 +24,7 @@ let gameStarted = false;
 
 // Bird image
 let birdImg = new Image();
-birdImg.src = 'bird2.png';  // Make sure this path is correct
+birdImg.src = 'bird2.png';  // Bird
 
 function drawBird() {
     ctx.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
@@ -39,7 +39,7 @@ function updateBird() {
 }
 
 function addPipe() {
-    // Ensure there's always enough space for a bottom pipe
+    // Must always have a bottom pipe
     let minTopPipeHeight = 100; // Minimum height for the top pipe
     let maxTopPipeHeight = canvas.height - pipeGap - 100; // Maximum height for the top pipe
     let topPipeHeight = Math.floor(Math.random() * (maxTopPipeHeight - minTopPipeHeight + 1)) + minTopPipeHeight;
@@ -57,7 +57,7 @@ function drawPipes() {
 }
 
 function updatePipes() {
-    if (frameCount % 120 === 0) { // Change from 90 to 180
+    if (frameCount % 120 === 0) { // Change from 90 to 180 - Gap between each set of pipes
         addPipe();
     }
     pipes.forEach(function(pipe, index) {
@@ -67,7 +67,7 @@ function updatePipes() {
         }
         if (pipe.x + pipeWidth < bird.x && !pipe.scored) {
             score++;
-            pipe.scored = true; // Mark the pipe as scored
+            pipe.scored = true; // Mark the pipe as scored - tracking scores
         }
         if (gameRunning && collisionDetection(pipe)) {
             gameOver();
@@ -114,7 +114,7 @@ function drawDebug() {
 
     ctx.fillStyle = 'rgba(0, 255, 0, 0.3)';
     ctx.fillRect(bird.x, bird.y, bird.width, bird.height);
-}
+} // debug mode helps see hitbox on pipes and bird
 
 function gameOver() {
     gameRunning = false;
@@ -125,14 +125,14 @@ function gameOver() {
     ctx.fillText(`Score: ${score}`, 130, canvas.height / 2 + 40);
     ctx.fillText(`High Score: ${highScore}`, 100, canvas.height / 2 + 80);
     document.getElementById('restartButton').style.display = 'block';
-}
+} // When die/failure
 
 function updateHighScore() {
     if (score > highScore) {
         highScore = score;
         setCookie('highScore', highScore, 365);
     }
-}
+} // Store highest score in cookies
 
 function restartGame() {
     bird = { x: 50, y: 150, velocityY: 0, width: 30, height: 30 };
@@ -144,14 +144,14 @@ function restartGame() {
     gameStarted = false;
     //debugMode = window.debugMode || false;  // Keep the debug mode state
     gameLoop();
-}
+} 
 
 function setCookie(name, value, days) {
     const d = new Date();
     d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
     let expires = "expires=" + d.toUTCString();
     document.cookie = name + "=" + value + ";" + expires + ";path=/";
-}
+} // Don't touch
 
 function getCookie(name) {
     let nameEQ = name + "=";
@@ -162,21 +162,21 @@ function getCookie(name) {
         if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
     }
     return null;
-}
+} // dont touch
 
 document.addEventListener('keydown', function(event) {
     if (event.code === 'Space' && gameRunning) {
         bird.velocityY = jump;
         gameStarted = true;
     }
-});
+}); // Trigger
 
 canvas.addEventListener('click', function(event) {
     if (gameRunning) {
         bird.velocityY = jump;
         gameStarted = true;
     }
-});
+}); // Another trigger
 
 canvas.addEventListener('touchstart', function(event) {
     if (gameRunning) {
@@ -184,7 +184,7 @@ canvas.addEventListener('touchstart', function(event) {
         gameStarted = true;
     }
     event.preventDefault(); // Prevent the default action to avoid scrolling the page
-}, false);
+}, false); // Helps with mobile support
 
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
