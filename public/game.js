@@ -1,7 +1,8 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
-canvas.width = 400;
-canvas.height = 600;
+const aspectRatio = 400 / 600; // original width / height
+canvas.height = window.innerHeight;
+canvas.width = canvas.height * aspectRatio;
 
 // Set background color
 ctx.fillStyle = 'lightblue';
