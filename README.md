@@ -18,8 +18,6 @@ I have the game running on my GitHub live so shouldn’t require any installatio
 
 [https://mystik01.github.io/FlappyBird/public/](https://mystik01.github.io/FlappyBird/public/)
 
-[https://mystik01.github.io/FlappyBird/public/](https://mystik01.github.io/FlappyBird/public/)
-
 ### Running locally:
 
 To run the game simply direct into the ~/public folder and open the index.html file.
@@ -40,6 +38,4 @@ This will allow you to either create a bug report or feedback report. Users are 
 
 The game tracks your highest score in your browsers cookies and is the only data which it tracks and stores. The whole game is client sided and the code is only hosted GitHub. The actual game is run on your pc so if you have an older/slower computer it may impact the performance. All computers and mobiles should be able to run this fine without any performance issues however mobile isn’t completely compatible. You do need to have a newish/updated browser to play, e.g old internet explorer would not be able to run this. This shouldn’t be an issue for majority of users. 
 
-[https://github.com/Mystik01/FlappyBird](https://github.com/Mystik01/FlappyBird)
 
-[Untitled Database](Flappy%20Bird%204b8822cde03b4f5db8e6a4acef83b48f/Untitled%20Database%200ae148f4b56f4f1daf98b204d3718da0.csv)
