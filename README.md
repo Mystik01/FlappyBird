@@ -18,6 +18,7 @@ I have the game running on my GitHub live so shouldn’t require any installatio
 
 [https://mystik01.github.io/FlappyBird/public/](https://mystik01.github.io/FlappyBird/public/)
 
+
 ### Running locally:
 
 To run the game simply direct into the ~/public folder and open the index.html file.
@@ -38,4 +39,10 @@ This will allow you to either create a bug report or feedback report. Users are 
 
 The game tracks your highest score in your browsers cookies and is the only data which it tracks and stores. The whole game is client sided and the code is only hosted GitHub. The actual game is run on your pc so if you have an older/slower computer it may impact the performance. All computers and mobiles should be able to run this fine without any performance issues however mobile isn’t completely compatible. You do need to have a newish/updated browser to play, e.g old internet explorer would not be able to run this. This shouldn’t be an issue for majority of users. 
 
+Have had some issues where the bird’s hitbox is hitting the walls when visually it is not. This is because the image the the bird is not exactly cut around the bird. I haven’t been able to find a fix for this and have cropped it as tight as possible. 
 
+You can view the hitbox by opening your browser console (`F12` or `CTRL+SHIFT+I`) and typing into the console `debugMode = true` . You can achieve the same by clicking `CTRL + ALT + SHIFT + S` .
+
+You can view the raw game code here:
+
+[](https://github.com/Mystik01/FlappyBird/blob/main/public/game1.js)
