@@ -4,8 +4,6 @@ P5 produce basic documentation for a working game
 
 D2 produce detailed technical documentation for a working game
 
-[https://github.com/Mystik01/FlappyBird/](https://github.com/Mystik01/FlappyBird/)
-
 # User Documentation
 
 ## Installation:
@@ -44,4 +42,27 @@ Have had some issues where the bird’s hitbox is hitting the walls when visuall
 You can view the hitbox by opening your browser console (`F12` or `CTRL+SHIFT+I`) and typing into the console `debugMode = true` . You can achieve the same by clicking `CTRL + ALT + SHIFT + S` .
 
 You can view the raw game code here:
-https://github.com/Mystik01/FlappyBird/blob/main/public/game1.js
+
+[](https://github.com/Mystik01/FlappyBird/blob/main/public/game1.js)
+
+---
+
+## Program Development
+
+I was inspired to make my own version of Flappy Bird by the game’s iconic graphics and simple layout. Flappy Bird’s simplicity is what makes it appealing and widely playable. In addition to being simple to understand and play, the goal of the game is to pass between pipes to get the highest score. This design also makes coding the game simpler. Because of the simple goal and mechanics of the game, creating a variant would be both an easy attempt and a chance to add to a beloved genre.
+I chose to write it in JavaScript as it can be easily run by anyone on any device allowing anyone to play without any issues. I am familiar with JavaScript from experience and knew it could be a simple task.
+I also used Visual Studio Code as I find it to be the best text-editor (in my opinion) for it’s simple design and ability to customise it in any way you want and have extensions to help make your programming experience more efficient. Visual Studio Code also allowed me to connect to my GitHub codespace where I was actively writing and testing the program and synchronising it with GitHub.
+
+## Data Use
+
+In the game, player scores are dynamically managed using variables, with the live score displayed in the top right or when the player dies/game ends. Only the highest score achieved is saved between sessions by storing it in cookies, ensuring that new higher scores always replace lesser ones. Player jumps are enabled through responsive input methods like spacebar presses, mouse clicks, or touchscreen taps. However, the game continuously generates obstacles, such as pipes, in real-time, without saving their positions, focusing solely on the immediate gameplay experience and scorekeeping.
+
+## Development of other parts of the game
+
+The actual bird image: <img src="https://github.com/Mystik01/FlappyBird/blob/main/public/bird4.png?raw=true" width="25" height="25" title="hover text">
+
+Was created based on the original flappy bird but wanted to have my own version of it. My version has more colours and has slightly more complexity to it. The colours used are reflected with the background of my version of the game. Every other part of the game is rendered using Javascript and the [Canvas API using HTML](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API). This is why the game is simple and easy to run as it uses very light weight renders which are already built into your browser.
+
+
+<img src="https://i.ibb.co/5MPHJXT/palette.png" alt="palette" border="0">
+    
