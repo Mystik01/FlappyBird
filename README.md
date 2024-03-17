@@ -43,7 +43,7 @@ You can view the hitbox by opening your browser console (`F12` or `CTRL+SHIFT+I`
 
 You can view the raw game code here:
 
-[](https://github.com/Mystik01/FlappyBird/blob/main/public/game1.js)
+https://github.com/Mystik01/FlappyBird/blob/main/public/game1.js
 
 ---
 
