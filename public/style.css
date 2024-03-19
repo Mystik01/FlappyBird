@@ -1,5 +1,61 @@
-canvas {
+/* Style for the game canvas */
+#gameCanvas {
     display: block;
     margin: auto;
-    background-color: #f0f0f0;
+    background-color: lightblue; /* Or any other color you prefer */
+}
+
+/* Style for the popup */
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #EB9A16;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);    
+    z-index: 2; /* Make sure the z-index is higher than the canvas */
+    text-align: center;
+}
+
+/* When displayed, we want to show the popup */
+.popup.show {
+    display: block;
+}
+
+/* Style for the restart button */
+
+
+.popup-content {
+    color: black;
+    background-color: #EB9A16; /* Light background for the content */
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); */
+    display: flex; /* Use flexbox to align children */
+    flex-direction: column; /* Stack children vertically */
+    align-items: center; /* Center children horizontally */
+    justify-content: center; /* Center children vertically if there is extra space */
+    width: auto; /* Or set a specific width */
+    max-width: 90%; /* Or a maximum width */
+}
+
+#restartButton {
+    background-color: #AF185B; /* Orange button */
+    border: none;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #270D3E; /* Dark purple text */
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 20px; /* Add some space between the score and the button */
+}
+
+/* When the button is hovered over, make it a bit darker */
+#restartButton:hover {
+    background-color: #AF185B; /* Darker pink */
 }

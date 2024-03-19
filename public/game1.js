@@ -227,12 +227,19 @@ function gameOver() {
   gameRunning = false;
   gameStarted = false;
   updateHighScore();
-  ctx.fillStyle = "black";
-  ctx.font = "36px Arial";
-  ctx.fillText("Game Over", 100, canvas.height / 2);
-  ctx.fillText(`Score: ${score}`, 130, canvas.height / 2 + 40);
-  ctx.fillText(`High Score: ${highScore}`, 100, canvas.height / 2 + 80);
-  document.getElementById("restartButton").style.display = "block";
+
+  document.getElementById('finalScore').textContent = score.toString();
+  document.getElementById('highScore').textContent = highScore.toString();
+
+  var gameOverPopup = document.getElementById('gameOverPopup');
+  gameOverPopup.style.display = 'block';
+
+  var restartButton = document.getElementById('restartButton');
+    gameOverPopup.getElementsByClassName('popup-content')[0].appendChild(restartButton);
+    restartButton.style.display = 'block';
+
+
+  //document.getElementById("restartButton").style.display = "block";
 } // When die/failure
 
 function updateHighScore() {
@@ -242,6 +249,8 @@ function updateHighScore() {
   }
 } // Store highest score in cookies
 
+
+
 function restartGame() {
   // Self explainatry
   bird = { x: 50, y: 150, velocityY: 0, width: 30, height: 30 };
@@ -249,7 +258,7 @@ function restartGame() {
   score = 0;
   gameRunning = true;
   frameCount = 0;
-  document.getElementById("restartButton").style.display = "none";
+  document.getElementById('gameOverPopup').style.display = 'none';
   gameStarted = false;
   //debugMode = window.debugMode || false;  // Keep the debug mode state
   gameLoop();
