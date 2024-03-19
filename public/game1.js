@@ -1,3 +1,4 @@
+// Setup game window using constant because window size will not change
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 const aspectRatio = 400 / 600; // original width / height
@@ -10,11 +11,11 @@ ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 // Game variables
 let bird = { x: 50, y: 150, velocityY: 0, width: 35, height: 35 };
-let gravity = 0.6;
-let jump = -8;
+let gravity = 0.8  // Scale gravity assuming 60 FPS as base
+let jump = -10 // Scale jump strength
 let pipes = [];
 let pipeWidth = 50;
-let pipeGap = 150;
+let pipeGap = canvas.height * 0.15
 let score = 0;
 let highScore = getCookie("highScore") || 0;
 let gameRunning = true;
@@ -22,6 +23,9 @@ let frameCount = 0;
 var debugMode = false;
 let gameStarted = false;
 let gamePaused = false;
+
+let timeToNextPipe = 0;
+let pipeInterval = 2000; // Time in milliseconds (e.g., 2000ms = 2 seconds between pipes)
 
 // Bird image
 let birdImg = new Image();
@@ -31,9 +35,9 @@ function drawBird() {
   ctx.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
 }
 
-function updateBird() {
-  bird.velocityY += gravity;
-  bird.y += bird.velocityY;
+function updateBird(deltaTime) {
+  bird.velocityY += gravity * (deltaTime / (1000/60));
+  bird.y += bird.velocityY * (deltaTime / (1000/60));
   if (bird.y + bird.height > canvas.height || bird.y < 0) {
     gameOver();
   }
@@ -59,13 +63,19 @@ function drawPipes() {
   });
 }
 
-function updatePipes() {
-  if (frameCount % 120 === 0) {
+function updatePipes(deltaTime) {
+  if (frameCount % 400 === 0) {
     // Change from 90 to 180 - Gap between each set of pipes
     addPipe();
   }
+
+  // timeToNextPipe -= deltaTime;
+  // if (timeToNextPipe <= 0) {
+  //   addPipe();
+  //   timeToNextPipe = pipeInterval + timeToNextPipe; // Reset timer, adding overflow to keep timing consistent
+  // }
   pipes.forEach(function (pipe, index) {
-    pipe.x -= 2;
+    pipe.x -= 2 * (deltaTime / (1000/60)); // Adjust speed if necessary // Move pipes based on deltaTime
     if (pipe.x + pipeWidth < -pipeWidth) {
       // Change from 0 to -pipeWidth
       pipes.splice(index, 1);
@@ -333,38 +343,40 @@ function hidePauseMenu() {
     requestAnimationFrame(gameLoop);
   }
 }
+let lastTime = 0;
 
-function gameLoop() {
+function gameLoop(timestamp) {
   if (!gamePaused) {
+    const deltaTime = timestamp - lastTime;
+    lastTime = timestamp;
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-  }
+    ctx.fillStyle = "#A1DAC0";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  // Set the background color
-  ctx.fillStyle = "#A1DAC0";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  drawBird();
-  if (debugMode) {
-    drawDebug(); // Debugging collision boxes
-  }
-  if (gameStarted) {
-    // Add this line
-    drawPipes();
-    updateBird();
-    updatePipes();
-    ctx.font = "20px Arial";
-    ctx.fillStyle = "black";
+    drawBird();
+    if (debugMode) {
+      drawDebug(); // Debugging collision boxes
+    }
+    if (gameStarted) {
+      drawPipes();
+      updateBird(deltaTime);
+      updatePipes(deltaTime);
+      ctx.font = "20px Arial";
+      ctx.fillStyle = "black";
+      ctx.fillText(score.toString(), 10, 30);
+    }
 
-    // Show the score
-    ctx.fillText(score.toString(), 10, 30);
-  }
+    if (gamePaused) {
+      showPauseMenu();
+    } else if (gameRunning) {
+      requestAnimationFrame(gameLoop);
+    }
 
-  if (gamePaused) {
-    showPauseMenu();
-  } else if (gameRunning) {
+    frameCount++;
+  } else {
     requestAnimationFrame(gameLoop);
   }
-
-  frameCount++;
 }
 
 document.getElementById("restartButton").addEventListener("click", restartGame);
