@@ -15,7 +15,7 @@ let gravity = 0.8  // Scale gravity assuming 60 FPS as base
 let jump = -10 // Scale jump strength
 let pipes = [];
 let pipeWidth = 50;
-let pipeGap = canvas.height * 0.15
+let pipeGap = canvas.height * 0.15;
 let score = 0;
 let highScore = getCookie("highScore") || 0;
 let gameRunning = true;
@@ -23,7 +23,7 @@ let frameCount = 0;
 var debugMode = false;
 let gameStarted = false;
 let gamePaused = false;
-
+let canJump = true; // Stops jumping -- DO NOT EDIT
 let timeToNextPipe = 0;
 let pipeInterval = 2000; // Time in milliseconds (e.g., 2000ms = 2 seconds between pipes)
 
@@ -32,6 +32,8 @@ let birdImg = new Image();
 birdImg.src = "bird4.png"; // Bird
 
 function drawBird() {
+  console.log("test3")
+
   ctx.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
 }
 
@@ -64,30 +66,58 @@ function drawPipes() {
 }
 
 function updatePipes(deltaTime) {
-  if (frameCount % 400 === 0) {
-    // Change from 90 to 180 - Gap between each set of pipes
+  timeToNextPipe -= deltaTime;
+  
+  // When it's time to add a new pipe...
+  if (timeToNextPipe <= 0) {
     addPipe();
+    // Reset the timer, adding any overflow to keep the timing consistent
+    // For example, if timeToNextPipe went 5ms below 0, start the next interval 5ms short
+    timeToNextPipe = pipeInterval + timeToNextPipe;
   }
 
-  // timeToNextPipe -= deltaTime;
-  // if (timeToNextPipe <= 0) {
-  //   addPipe();
-  //   timeToNextPipe = pipeInterval + timeToNextPipe; // Reset timer, adding overflow to keep timing consistent
-  // }
-  pipes.forEach(function (pipe, index) {
-    pipe.x -= 2 * (deltaTime / (1000/60)); // Adjust speed if necessary // Move pipes based on deltaTime
+  pipes.forEach(function(pipe, index) {
+    // Adjust speed if necessary; move pipes based on deltaTime for consistent speed across devices
+    pipe.x -= 2 * (deltaTime / (1000 / 60)); // You might need to adjust this speed
+    
+    // Remove pipe if it's off-screen
     if (pipe.x + pipeWidth < -pipeWidth) {
-      // Change from 0 to -pipeWidth
       pipes.splice(index, 1);
     }
+    
+    // Increment score and check for collisions
     if (pipe.x + pipeWidth < bird.x && !pipe.scored) {
       score++;
-      pipe.scored = true; // Mark the pipe as scored - tracking scores
+      pipe.scored = true;
     }
     if (gameRunning && collisionDetection(pipe)) {
-      gameOver(); // you die
+      gameOver(); // Game over on collision
     }
   });
+  // if (frameCount % 150 === 0) {
+  //   // Change from 90 to 180 - Gap between each set of pipes
+  //   addPipe();
+  // }
+
+  // // timeToNextPipe -= deltaTime;
+  // // if (timeToNextPipe <= 0) {
+  // //   addPipe();
+  // //   timeToNextPipe = pipeInterval + timeToNextPipe; // Reset timer, adding overflow to keep timing consistent
+  // // }
+  // pipes.forEach(function (pipe, index) {
+  //   pipe.x -= 2 * (deltaTime / (1000/60)); // Adjust speed if necessary // Move pipes based on deltaTime
+  //   if (pipe.x + pipeWidth < -pipeWidth) {
+  //     // Change from 0 to -pipeWidth
+  //     pipes.splice(index, 1);
+  //   }
+  //   if (pipe.x + pipeWidth < bird.x && !pipe.scored) {
+  //     score++;
+  //     pipe.scored = true; // Mark the pipe as scored - tracking scores
+  //   }
+  //   if (gameRunning && collisionDetection(pipe)) {
+  //     gameOver(); // you die
+  //   }
+  // });
 }
 
 function collisionDetection(pipe) {
@@ -252,6 +282,7 @@ function updateHighScore() {
 
 
 function restartGame() {
+  console.log("test")
   // Self explainatry
   bird = { x: 50, y: 150, velocityY: 0, width: 30, height: 30 };
   pipes = [];
@@ -260,6 +291,8 @@ function restartGame() {
   frameCount = 0;
   document.getElementById('gameOverPopup').style.display = 'none';
   gameStarted = false;
+  console.log("test")
+
   //debugMode = window.debugMode || false;  // Keep the debug mode state
   gameLoop();
 }
@@ -285,11 +318,12 @@ function getCookie(name) {
 } // dont touch
 
 document.addEventListener("keydown", function (e) {
-  if (e.code === "Space") {
+  if (e.code === "Space" && canJump) {
     // Jump
     if (gameRunning) {
       bird.velocityY = jump;
       gameStarted = true;
+      canJump = false; // Prevent further jumps until the space bar is released
     } else {
       restartGame();
     }
@@ -312,9 +346,15 @@ document.addEventListener("keydown", function (e) {
     // Activate the "hacker" shortcut key ++ Doesn't work
     perfectJump();
   }
-}); // Trigger
+});
 
-canvas.addEventListener("click", function (event) {
+document.addEventListener("keyup", function (e) {
+  if (e.code === "Space") {
+    canJump = true; // Allow jumping again
+  }
+});// Trigger
+
+document.addEventListener("click", function (event) {
   // left click on mouse
   if (gameRunning) {
     bird.velocityY = jump;
@@ -355,6 +395,8 @@ function hidePauseMenu() {
 let lastTime = 0;
 
 function gameLoop(timestamp) {
+  console.log("test2")
+
   if (!gamePaused) {
     const deltaTime = timestamp - lastTime;
     lastTime = timestamp;
@@ -388,6 +430,10 @@ function gameLoop(timestamp) {
   }
 }
 
-document.getElementById("restartButton").addEventListener("click", restartGame);
+document.getElementById("restartButton").addEventListener("click", function(event) {
+  event.stopPropagation(); // Prevent the click from propagating
+  restartGame();
+});
+
 
 gameLoop();
