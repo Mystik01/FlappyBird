@@ -32,14 +32,13 @@ let birdImg = new Image();
 birdImg.src = "bird4.png"; // Bird
 
 function drawBird() {
-  console.log("test3")
 
   ctx.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
 }
 
 function updateBird(deltaTime) {
-  bird.velocityY += gravity * (deltaTime / (1000/60));
-  bird.y += bird.velocityY * (deltaTime / (1000/60));
+  bird.velocityY += gravity * (deltaTime / (1000 / 60));
+  bird.y += bird.velocityY * (deltaTime / (1000 / 60));
   if (bird.y + bird.height > canvas.height || bird.y < 0) {
     gameOver();
   }
@@ -67,7 +66,7 @@ function drawPipes() {
 
 function updatePipes(deltaTime) {
   timeToNextPipe -= deltaTime;
-  
+
   // When it's time to add a new pipe...
   if (timeToNextPipe <= 0) {
     addPipe();
@@ -76,15 +75,15 @@ function updatePipes(deltaTime) {
     timeToNextPipe = pipeInterval + timeToNextPipe;
   }
 
-  pipes.forEach(function(pipe, index) {
+  pipes.forEach(function (pipe, index) {
     // Adjust speed if necessary; move pipes based on deltaTime for consistent speed across devices
     pipe.x -= 2 * (deltaTime / (1000 / 60)); // You might need to adjust this speed
-    
+
     // Remove pipe if it's off-screen
     if (pipe.x + pipeWidth < -pipeWidth) {
       pipes.splice(index, 1);
     }
-    
+
     // Increment score and check for collisions
     if (pipe.x + pipeWidth < bird.x && !pipe.scored) {
       score++;
@@ -265,8 +264,8 @@ function gameOver() {
   gameOverPopup.style.display = 'block';
 
   var restartButton = document.getElementById('restartButton');
-    gameOverPopup.getElementsByClassName('popup-content')[0].appendChild(restartButton);
-    restartButton.style.display = 'block';
+  gameOverPopup.getElementsByClassName('popup-content')[0].appendChild(restartButton);
+  restartButton.style.display = 'block';
 
 
   //document.getElementById("restartButton").style.display = "block";
@@ -282,7 +281,6 @@ function updateHighScore() {
 
 
 function restartGame() {
-  console.log("test")
   // Self explainatry
   bird = { x: 50, y: 150, velocityY: 0, width: 30, height: 30 };
   pipes = [];
@@ -291,7 +289,6 @@ function restartGame() {
   frameCount = 0;
   document.getElementById('gameOverPopup').style.display = 'none';
   gameStarted = false;
-  console.log("test")
 
   //debugMode = window.debugMode || false;  // Keep the debug mode state
   gameLoop();
@@ -316,6 +313,7 @@ function getCookie(name) {
   }
   return null;
 } // dont touch
+let ignoreFirstClick = false; // Flag to track if the first click should be ignored
 
 document.addEventListener("keydown", function (e) {
   if (e.code === "Space" && canJump) {
@@ -325,7 +323,11 @@ document.addEventListener("keydown", function (e) {
       gameStarted = true;
       canJump = false; // Prevent further jumps until the space bar is released
     } else {
-      restartGame();
+      if (ignoreFirstClick) {
+        ignoreFirstClick = false;
+      } else {
+        restartGame();
+      }
     }
   }
   if (e.ctrlKey && e.altKey && e.shiftKey && e.key === "S") {
@@ -395,7 +397,7 @@ function hidePauseMenu() {
 let lastTime = 0;
 
 function gameLoop(timestamp) {
-  console.log("test2")
+
 
   if (!gamePaused) {
     const deltaTime = timestamp - lastTime;
@@ -430,7 +432,7 @@ function gameLoop(timestamp) {
   }
 }
 
-document.getElementById("restartButton").addEventListener("click", function(event) {
+document.getElementById("restartButton").addEventListener("click", function (event) {
   event.stopPropagation(); // Prevent the click from propagating
   restartGame();
 });

@@ -11,7 +11,7 @@ ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 // Game variables
 let bird = { x: 50, y: 150, velocityY: 0, width: 35, height: 35 };
-let gravity = 0.6;
+let gravity = 1.25;
 let jump = -8;
 let pipes = [];
 let pipeWidth = 50;
