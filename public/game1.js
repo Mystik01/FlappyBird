@@ -324,7 +324,7 @@ document.addEventListener("keydown", function (e) {
       canJump = false; // Prevent further jumps until the space bar is released
     } else {
       if (ignoreFirstClick) {
-        ignoreFirstClick = false;
+        ignoreFirstClick = true;
       } else {
         restartGame();
       }
