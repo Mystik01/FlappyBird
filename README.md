@@ -59,7 +59,7 @@ In the game, player scores are dynamically managed using variables, with the liv
 
 ## Development of other parts of the game
 
-The actual bird image: <img src="https://github.com/Mystik01/FlappyBird/blob/main/public/bird4.png?raw=true" width="25" height="25" title="hover text">
+The actual bird image: <img src="https://github.com/Mystik01/FlappyBird/blob/main/public/bird4.png?raw=true" width="25" height="25" title="Colorful bird">
 
 Was created based on the original flappy bird but wanted to have my own version of it. My version has more colours and has slightly more complexity to it. The colours used are reflected with the background of my version of the game. Every other part of the game is rendered using Javascript and the [Canvas API using HTML](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API). This is why the game is simple and easy to run as it uses very light weight renders which are already built into your browser.
 
